@@ -24,7 +24,7 @@ The three.js canvas is never shown; the final image is drawn into `#c`.
 
 The camera's near plane is only about 7 cm wide. Any error in where the water surface is gets magnified to the whole screen at the waterline, so **the water mesh and the per-pixel waterline test use the same function**: the same textures, an exact f32 bilinear (four texel loads) for the two coarse cascades, a **4-tap cubic B-spline** for the 7.3 m cascade (bilinear 2.85 cm texels turn into visible kinks on the waterline), and 6 damped fixed-point iterations to invert the horizontal displacement. It lives in two places, the TSL `oceanNodes.displacement` and the WGSL `bilinearExact` / `bsplineDisp` / `heightAt` / `nearS` in `post.js`; change one and you must change the other.
 
-The coarse cascades are filtered by hand because the GPU's bilinear filter keeps only about 8 bits of the position inside a texel. On the 250 m cascade (1 m texels) that is about 4 mm, enough to put small steps into the waterline every hundred pixels or so.
+The coarse cascades are filtered by hand because the GPU's bilinear filter keeps only about 8 bits of the position inside a texel. On the 250 m cascade (1 m texels) that is about 4 mm, enough to put small steps into the waterline every hundred pixels or so. The waterline test only needs this for the final height; its fixed-point iterations (`dispFast`) keep the hardware filter, which costs nothing visible there.
 
 The water material, the underwater compositing, the lens film and the lens layer all read the same near-plane texture, so their waterlines agree by construction. The water material picks its above / below branch from that texture rather than from `frontFacing`, because folded wave crests flip their faces.
 
