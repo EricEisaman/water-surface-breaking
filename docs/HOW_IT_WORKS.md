@@ -40,11 +40,11 @@ Absorption and scattering are per RGB channel. The defaults are a clear tropical
 | absorption σa (1/m) | 0.42 | 0.065 | 0.025 |
 | scattering σs (1/m) | 0.020 | 0.030 | 0.045 |
 
-Light going *down* is attenuated with the diffuse coefficient `Kd ≈ σa + 0.3 σs`; light along the *view ray* with `σt = σa + σs`. Single scattering along a view segment has a closed form because both exponents are linear in the distance:
+Light going *down* is attenuated with the diffuse coefficient `Kd ≈ σa + 0.25 σs`; light along the *view ray* with `σt = σa + σs`. Single scattering along a view segment has a closed form because both exponents are linear in the distance:
 
 ```
 L_in  = σs · p(cos θ) · E_sun' · exp(−Kd' · depth0) · (1 − exp(−k d)) / k,   k = σt − Kd' · v.y,  Kd' = Kd / cos θ_refr
-L_amb = σs / σt · A(depth) · (1 − exp(−σt d))                                  (sky light, with a multiple-scattering boost)
+L_amb = σs · E_sky · exp(−Kd · depth0) · (1 − exp(−k_a d)) / k_a · boost,      k_a = σt − Kd · v.y   (sky light; boost approximates multiple scattering)
 L     = L_scene · exp(−σt d) + L_in · caustics/shafts + L_amb
 ```
 
@@ -54,7 +54,7 @@ Every opaque material gets the same underwater lighting (`underwaterize` in `src
 
 ## Caustics (`src/ocean/caustics.js`)
 
-The area-ratio method from Evan Wallace's WebGL Water: a source grid with 2 vertices per texel is refracted through the surface and rasterised onto a plane; brighter where triangles shrink. It is drawn three times with three indices of refraction for chromatic dispersion, into a 1024² window that follows the camera (20 m), and its mips serve as defocus blur with depth. The 7.3 m cascade only contributes 30 % (sampled at mip 1.5); at full strength the seabed fills with sparkle noise at 3 m.
+The area-ratio method from Evan Wallace's WebGL Water: a source grid with one vertex every 2 texels is refracted through the surface and rasterised onto a plane; brighter where triangles shrink. It is drawn three times with three indices of refraction for chromatic dispersion, into a 1024² window that follows the camera (20 m), and its mips serve as defocus blur with depth. The 7.3 m cascade only contributes 30 % (sampled at mip 1.5); at full strength the seabed fills with sparkle noise at 3 m.
 
 ## Light shafts
 

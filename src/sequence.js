@@ -1,6 +1,6 @@
 // Scripted camera for the demo / recordings: above -> half-submerged -> underwater -> surfacing -> above.
 // Positions and look targets are interpolated with centripetal Catmull-Rom + smoothstep timing, so the
-// camera never jerks (the user is sensitive to shaky cameras).
+// camera never jerks.
 import * as THREE from "three/webgpu";
 
 // [time s, position, look-at]

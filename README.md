@@ -65,14 +65,15 @@ Open http://localhost:5195/. The demo starts playing a 37-second camera path fro
 The assets (about 27 MB of CC0 rocks, textures and sky) are already in the repository, so there is nothing else to download.
 
 > [!TIP]
-> **Laptop with two GPUs?** Chrome often runs WebGPU on the integrated GPU, which is much slower. On Windows, set Chrome to "High performance" in *Settings → System → Display → Graphics*, or start the page with `node tools/capture.mjs --view` (after `npm run build`), which opens a separate Chrome profile on the high-performance GPU and prints which adapter WebGPU got.
+> **Laptop with two GPUs?** Chrome often runs WebGPU on the integrated GPU, which is much slower. On Windows, set Chrome to "High performance" in *Settings → System → Display → Graphics*, or, with `npm run dev` running, open the page with `node tools/capture.mjs --view`, which starts a separate Chrome profile on the NVIDIA GPU.
 
 ## 🎮 Controls
 
 | Input | Action |
 |---|---|
-| Drag the mouse or press **Space** | Free-fly camera |
-| **W A S D**, **Q E** | Move, down / up (**Shift** fast, **Ctrl** slow) |
+| Drag the mouse | Look around (switches to the free-fly camera) |
+| **Space** | Switch between the demo and the free-fly camera |
+| **W A S D**, **Q E** | Move, down / up (hold **Shift** to go faster) |
 | **1** – **6** | Fixed views: above · half · under · snell · shafts · shore |
 | **0** | Back to the demo path |
 | **P** | Per-pass GPU timings |
@@ -121,7 +122,7 @@ On a laptop RTX 4070 at 1920×1080 output, one frame takes roughly 7 ms of GPU t
 | Preset | What it does |
 |---|---|
 | `high` | Renders at 1.25× and downsamples (no TAA), 40 light-shaft steps |
-| `medium` | Native resolution |
+| `medium` | Native resolution, 40 light-shaft steps |
 | `low` | 0.8× resolution, 24 light-shaft steps |
 
 Where the time goes, how to profile it and what could still be faster: **[docs/PERFORMANCE.md](docs/PERFORMANCE.md)**.
@@ -134,11 +135,11 @@ Where the time goes, how to profile it and what could still be faster: **[docs/P
 npm run build
 node tools/capture.mjs --shots out/shots                  # one PNG per fixed view
 node tools/capture.mjs --seqshots out/seq --times 2,8,29  # stills from the demo path
-node tools/capture.mjs --video out/demo.mp4 --fps 30      # the whole demo, frame by frame (needs ffmpeg)
+node tools/capture.mjs --video out/demo.mp4 --fps 30      # the whole 37 s demo, frame by frame (needs ffmpeg)
 node tools/capture.mjs --bench 240                        # per-pass GPU timings
 ```
 
-Frames are rendered offline at a fixed time step, so videos are smooth however slow the GPU is, and screenshots are deterministic. Use `--chrome <path>` if Chrome is not in the default Windows location.
+Frames are rendered offline at a fixed time step, so videos are smooth however slow the GPU is, and screenshots are deterministic. `capture.mjs` is set up for Chrome on Windows (it picks the NVIDIA GPU by itself); elsewhere pass `--chrome <path>`.
 
 ## 🪨 Assets
 
@@ -183,7 +184,7 @@ Yes. The code is MIT and the assets are CC0. The KanaWorks_AI brand images are t
 - [x] Per-pass profiling and quality presets
 - [ ] Rock shadows inside the light shafts
 - [ ] Temporal anti-aliasing
-- [ ] A path-traced photo mode
+- [ ] Depth of field
 
 Issues and pull requests are welcome.
 

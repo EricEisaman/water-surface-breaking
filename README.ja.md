@@ -20,7 +20,7 @@
 
 **Minamo（水面）** は、ブラウザで動くリアルタイムの水のレンダラーです。**水の上、水の中、そしてカメラが半分沈んだときの水面の境目**を、写真のような見た目で描くことを目指しています。FFT による海面、水中での光の吸収と散乱、コースティクス、光の筋（ゴッドレイ）、スネルの窓、波に正確に沿う水面の境目、水から出たあとレンズを流れ落ちる水膜と水滴まで入っています。
 
-[three.js](https://threejs.org)（`WebGPURenderer`）と、同じ WebGPU デバイス上で動く自前の WGSL コンピュート / レンダーパスで作っています。ゲームエンジンもプラグインも不要です。`npm ci && npm run dev` で Chrome を開くだけです。
+[three.js](https://threejs.org)（`WebGPURenderer`）と、同じ WebGPU デバイス上で動く自前の WGSL コンピュート / レンダーパスで作っています。ゲームエンジンもプラグインも不要です。`npm ci && npm run dev` を実行して Chrome で開くだけです。
 
 <p align="center">
   <img src="docs/assets/surfacing.webp" alt="カメラが水面に浮上し、水面の境目がレンズを横切って水が流れ落ちる" width="820">
@@ -32,17 +32,17 @@
 <table>
 <tr>
 <td align="center" width="50%"><img src="docs/assets/hero-over-under.jpg" alt="半水面のショット：上に砂浜と空、下に海底、レンズに水滴"><br><b>半水面</b><br><sub>水面メッシュと同じ波の関数でピクセルごとに水の内外を判定。メニスカスの帯、流れ落ちる水膜、レンズを伝う水滴つき</sub></td>
-<td align="center" width="50%"><img src="docs/assets/light-shafts.jpg" alt="岩のまわりの水中の光の筋とコースティクス"><br><b>水中</b><br><sub>RGB ごとの吸収と単一散乱、あらゆる面に落ちる色分散つきのコースティクス、レイマーチの光の筋</sub></td>
+<td align="center" width="50%"><img src="docs/assets/light-shafts.jpg" alt="岩のまわりの水中の光の筋とコースティクス"><br><b>水中</b><br><sub>RGB ごとの吸収と単一散乱、あらゆる面に落ちる色分散つきのコースティクス、レイマーチングによる光の筋</sub></td>
 </tr>
 <tr>
 <td align="center"><img src="docs/assets/snell-window.jpg" alt="水中から見上げたスネルの窓と全反射"><br><b>見上げる</b><br><sub>屈折した空が見えるスネルの窓と、その外側の全反射</sub></td>
-<td align="center"><img src="docs/assets/above.jpg" alt="水上：波、泡、岩のある砂浜"><br><b>水上</b><br><sub>3 段カスケードの FFT 海面、フレネル、太陽のきらめき、屈折、泡、CC0 のスキャン岩</sub></td>
+<td align="center"><img src="docs/assets/above.jpg" alt="水上：波、泡、岩のある砂浜"><br><b>水上</b><br><sub>3 段カスケードの FFT 海面、フレネル、太陽のきらめき、屈折、泡、CC0 の 3D スキャンした岩</sub></td>
 </tr>
 </table>
 
-- **正確な境目。** カメラのニアプレーンは幅数センチしかないので、波の参照を少しでも手抜きすると画面全体にギザギザの線が出ます。水面と境目の判定は同じ関数を使い、いちばん細かい波は 3 次 B スプラインで補間しています。
+- **正確な境目。** カメラのニアプレーンは幅数センチしかないので、波の高さの計算を少しでも省略すると画面全体にギザギザの線が出ます。水面と境目の判定は同じ関数を使い、いちばん細かい波は 3 次 B スプラインで補間しています。
 - **浮かぶカメラ。** デモのカメラは防水ハウジングを手持ちしているように波に揺られるので、境目が何度もレンズを横切ります。
-- **物理ベースの水。** 透明な熱帯の海の吸収・散乱係数、前方に強い位相関数、岩や砂の一粒一粒まで深さに応じて減衰する光。
+- **物理ベースの水。** 透明な熱帯の海の吸収・散乱係数、前方に強い位相関数、岩の一つひとつ、砂の一粒一粒まで水深に応じて減衰する光。
 - **いじりやすい。** パラメータはすべて 1 ファイルとライブパネルにまとまっていて、どの数値も URL から変えられます。
 
 ## 🚀 クイックスタート
@@ -65,14 +65,15 @@ http://localhost:5195/ を開くと、水上から海底へ潜って戻ってく
 素材（CC0 の岩、テクスチャ、空で約 27 MB）はリポジトリに入っているので、ほかにダウンロードするものはありません。
 
 > [!TIP]
-> **GPU が 2 つあるノート PC の場合**、Chrome は WebGPU を内蔵 GPU で動かすことが多く、かなり遅くなります。Windows なら「設定 → システム → ディスプレイ → グラフィックス」で Chrome を「高パフォーマンス」にするか、`npm run build` のあと `node tools/capture.mjs --view` で開いてください。高性能 GPU を使う別プロファイルの Chrome が起動し、WebGPU がどのアダプターを使ったかを表示します。
+> **GPU が 2 つあるノート PC の場合**、Chrome は WebGPU を内蔵 GPU で動かすことが多く、かなり遅くなります。Windows なら「設定 → システム → ディスプレイ → グラフィック」で Chrome を「高パフォーマンス」にするか、`npm run dev` を起動した状態で `node tools/capture.mjs --view` を実行してください。NVIDIA GPU を使う別プロファイルの Chrome が起動します。
 
 ## 🎮 操作
 
 | 入力 | 動作 |
 |---|---|
-| マウスでドラッグ、または **Space** | 自由飛行カメラ |
-| **W A S D**、**Q E** | 移動、下降 / 上昇（**Shift** で速く、**Ctrl** でゆっくり） |
+| マウスでドラッグ | 見回す（自由飛行カメラに切り替わります） |
+| **Space** | デモと自由飛行カメラを切り替え |
+| **W A S D**、**Q E** | 移動、下降 / 上昇（**Shift** を押しながらで速く） |
 | **1** – **6** | 固定アングル：above · half · under · snell · shafts · shore |
 | **0** | デモに戻る |
 | **P** | パスごとの GPU 時間を表示 |
@@ -121,7 +122,7 @@ tools/
 | プリセット | 内容 |
 |---|---|
 | `high` | 1.25 倍で描いて縮小（TAA なし）、光の筋 40 ステップ |
-| `medium` | 等倍 |
+| `medium` | 等倍、光の筋 40 ステップ |
 | `low` | 0.8 倍、光の筋 24 ステップ |
 
 時間の内訳、計測方法、まだ速くできるところは **[docs/PERFORMANCE.md](docs/PERFORMANCE.md)**（英語）にまとめています。
@@ -134,11 +135,11 @@ tools/
 npm run build
 node tools/capture.mjs --shots out/shots                  # 固定アングルごとに PNG 1 枚
 node tools/capture.mjs --seqshots out/seq --times 2,8,29  # デモの指定時刻の静止画
-node tools/capture.mjs --video out/demo.mp4 --fps 30      # デモ全体を 1 フレームずつ書き出し（ffmpeg が必要）
+node tools/capture.mjs --video out/demo.mp4 --fps 30      # 37 秒のデモ全体を 1 フレームずつ書き出し（ffmpeg が必要）
 node tools/capture.mjs --bench 240                        # パスごとの GPU 時間
 ```
 
-固定の時間刻みでオフライン描画するので、GPU が遅くても動画はなめらかで、スクリーンショットも毎回同じになります。Chrome が Windows の既定の場所にない場合は `--chrome <パス>` を指定してください。
+固定の時間刻みでオフライン描画するので、GPU が遅くても動画はなめらかで、スクリーンショットも毎回同じになります。`capture.mjs` は Windows の Chrome 向けに作っていて、NVIDIA GPU を自動で選びます。ほかの環境では `--chrome <パス>` を指定してください。
 
 ## 🪨 素材
 
@@ -174,7 +175,7 @@ npm run assets    # LOD、meshopt 圧縮、WebP、圧縮 EXR の空
 <details>
 <summary><b>自分のプロジェクトで使えますか？</b></summary>
 
-はい。コードは MIT、素材は CC0 です。例外は KanaWorks_AI のブランド画像だけです。[ライセンスとクレジット](#-ライセンスとクレジット)を見てください。
+はい。コードは MIT、素材は CC0 です。例外は KanaWorks_AI のブランド画像だけです。[ライセンスとクレジット](#-ライセンスとクレジット)をご覧ください。
 </details>
 
 ## 🗺️ ロードマップ
@@ -182,8 +183,8 @@ npm run assets    # LOD、meshopt 圧縮、WebP、圧縮 EXR の空
 - [x] レンズ効果つきの水上 / 水中 / 半水面のリアルタイム描画
 - [x] パスごとの計測と画質プリセット
 - [ ] 光の筋に岩の影を落とす
-- [ ] テンポラル アンチエイリアス
-- [ ] パストレーシングのフォトモード
+- [ ] テンポラルアンチエイリアシング（TAA）
+- [ ] 被写界深度
 
 Issue やプルリクエストを歓迎します。
 
@@ -191,7 +192,7 @@ Issue やプルリクエストを歓迎します。
 
 Minamo を見て「おっ」と思ったら、[リポジトリページ](https://github.com/kanaworksai-hue/minamo)右上の **⭐ Star** を押してもらえるとうれしいです。ほかの人が見つけやすくなり、次のアップデートの励みになります。
 
-バグやアイデアは [Issue](https://github.com/kanaworksai-hue/minamo/issues) へどうぞ。スクリーンショットを X でシェアするときは [@KanaWorks_AI](https://x.com/KanaWorks_AI) をつけてください。
+バグやアイデアは [Issue](https://github.com/kanaworksai-hue/minamo/issues) へどうぞ。スクリーンショットを X でシェアするときは [@KanaWorks_AI](https://x.com/KanaWorks_AI) をメンションしてもらえるとうれしいです。
 
 ## 📄 ライセンスとクレジット
 

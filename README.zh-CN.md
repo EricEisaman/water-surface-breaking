@@ -36,21 +36,21 @@
 </tr>
 <tr>
 <td align="center"><img src="docs/assets/snell-window.jpg" alt="从水下往上看：斯涅尔窗和全反射"><br><b>向上看</b><br><sub>斯涅尔窗里是折射后的天空，窗外是全反射</sub></td>
-<td align="center"><img src="docs/assets/above.jpg" alt="水上：波浪、泡沫和有岩石的沙滩"><br><b>水上</b><br><sub>3 级 cascade 的 FFT 海面、菲涅尔、太阳闪光、折射、泡沫和 CC0 扫描岩石</sub></td>
+<td align="center"><img src="docs/assets/above.jpg" alt="水上：波浪、泡沫和有岩石的沙滩"><br><b>水上</b><br><sub>三级级联 FFT 海面、菲涅尔、太阳耀光、折射、泡沫和 CC0 扫描岩石</sub></td>
 </tr>
 </table>
 
 - **精确的水线。** 相机近平面只有几厘米宽，查波浪时稍微偷懒，屏幕上就会出现一条锯齿线。水面和水线判断共用同一个函数，最细的一级波浪用三次 B 样条插值。
 - **会漂浮的相机。** 演示相机像手持防水壳一样随浪起伏，水线会一次次扫过镜头。
-- **基于物理的海水。** 清澈热带海水的吸收和散射系数、强烈前向的相函数，每块岩石、每粒沙子上的光都按水深衰减。
-- **方便改。** 所有参数都在一个文件里，也都能在面板上实时调，任何数值都可以通过 URL 修改。
+- **基于物理的海水。** 清澈热带海水的吸收和散射系数、强前向散射的相函数，每块岩石、每粒沙子上的光都按水深衰减。
+- **易于修改。** 所有参数都在一个文件里，也都能在面板上实时调，任何数值都可以通过 URL 修改。
 
 ## 🚀 快速开始
 
 **需要：**
 
 - 支持 WebGPU 的桌面浏览器：较新的 **Chrome** 或 Edge。面向桌面 GPU，手机和核显会比较卡
-- [Node.js](https://nodejs.org) 22.12 或更新
+- [Node.js](https://nodejs.org) 22.12 或更高版本
 - `git`
 
 ```bash
@@ -65,14 +65,15 @@ npm run dev
 素材（CC0 的岩石、贴图和天空，约 27 MB）已经在仓库里，不用另外下载。
 
 > [!TIP]
-> **双显卡笔记本？** Chrome 经常把 WebGPU 放在核显上，会慢很多。Windows 上可以在「设置 → 系统 → 屏幕 → 显示卡」里把 Chrome 设成「高性能」；或者先 `npm run build`，再用 `node tools/capture.mjs --view` 打开：它会用独立的配置文件在高性能 GPU 上启动 Chrome，并打印 WebGPU 实际用的是哪块显卡。
+> **双显卡笔记本？** Chrome 经常把 WebGPU 放在核显上，会慢很多。Windows 上可以在「设置 → 系统 → 屏幕 → 显示卡」里把 Chrome 设成「高性能」；或者在 `npm run dev` 运行时执行 `node tools/capture.mjs --view`：它会用独立的配置文件在 NVIDIA 显卡上启动 Chrome。
 
 ## 🎮 操作
 
 | 输入 | 作用 |
 |---|---|
-| 拖动鼠标或按 **Space** | 自由飞行相机 |
-| **W A S D**、**Q E** | 移动、下降 / 上升（**Shift** 加速，**Ctrl** 减速） |
+| 拖动鼠标 | 环顾四周（切换到自由飞行相机） |
+| **Space** | 在演示和自由飞行相机之间切换 |
+| **W A S D**、**Q E** | 移动、下降 / 上升（按住 **Shift** 加速） |
 | **1** – **6** | 固定机位：above · half · under · snell · shafts · shore |
 | **0** | 回到演示 |
 | **P** | 显示每个 pass 的 GPU 时间 |
@@ -121,7 +122,7 @@ tools/
 | 档位 | 内容 |
 |---|---|
 | `high` | 按 1.25 倍渲染再缩小（没有 TAA），光柱 40 步 |
-| `medium` | 原生分辨率 |
+| `medium` | 原生分辨率，光柱 40 步 |
 | `low` | 0.8 倍分辨率，光柱 24 步 |
 
 时间花在哪里、怎么自己测、还有哪些地方能更快，见 **[docs/PERFORMANCE.md](docs/PERFORMANCE.md)**（英文）。
@@ -134,11 +135,11 @@ tools/
 npm run build
 node tools/capture.mjs --shots out/shots                  # 每个固定机位一张 PNG
 node tools/capture.mjs --seqshots out/seq --times 2,8,29  # 演示中指定时间的静帧
-node tools/capture.mjs --video out/demo.mp4 --fps 30      # 逐帧导出整段演示（需要 ffmpeg）
+node tools/capture.mjs --video out/demo.mp4 --fps 30      # 逐帧导出整段 37 秒的演示（需要 ffmpeg）
 node tools/capture.mjs --bench 240                        # 逐 pass GPU 时间
 ```
 
-画面按固定时间步长离线渲染，所以 GPU 再慢视频也是流畅的，截图每次也完全一样。Chrome 不在 Windows 默认位置时，用 `--chrome <路径>` 指定。
+画面按固定时间步长离线渲染，所以 GPU 再慢视频也是流畅的，截图每次也完全一样。`capture.mjs` 是按 Windows 上的 Chrome 写的，会自动选用 NVIDIA 显卡；其他环境请用 `--chrome <路径>` 指定 Chrome。
 
 ## 🪨 素材
 
@@ -183,7 +184,7 @@ npm run assets    # LOD、meshopt 压缩、WebP、压缩 EXR 天空
 - [x] 逐 pass 计时和画质档位
 - [ ] 光柱里的岩石阴影
 - [ ] 时域抗锯齿（TAA）
-- [ ] 路径追踪照片模式
+- [ ] 景深
 
 欢迎提 Issue 和 Pull Request。
 

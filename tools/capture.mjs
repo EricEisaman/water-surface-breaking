@@ -6,7 +6,7 @@
 //   npm run build, then:
 //   node tools/capture.mjs --shots out/shots [--w 1920 --h 1080] [--only above,half]     one PNG per preset view
 //   node tools/capture.mjs --seqshots out/seq --times 2,9,16,27,31                         demo sequence stills
-//   node tools/capture.mjs --video out/demo.mp4 [--fps 30] [--from 0 --dur 34]             demo sequence -> mp4
+//   node tools/capture.mjs --video out/demo.mp4 [--fps 30] [--from 0 --dur 37]             demo sequence -> mp4
 //   node tools/capture.mjs --bench 240 [--views above,half,under,snell] [--json out/bench.json]
 //        per-pass GPU ms (timestamp queries), continuous rAF submission, vsync off
 //   node tools/capture.mjs --view [--url http://localhost:5195/]                          interactive window
@@ -154,7 +154,7 @@ try {
     }
   }
   if (args.video) {
-    const fps = +(args.fps || 30), from = +(args.from || 0), dur = +(args.dur || 34);
+    const fps = +(args.fps || 30), from = +(args.from || 0), dur = +(args.dur || 37);   // the demo path is 37 s (src/sequence.js)
     const dir = path.join(ROOT, "out", "frames");
     fs.rmSync(dir, { recursive: true, force: true });
     fs.mkdirSync(dir, { recursive: true });

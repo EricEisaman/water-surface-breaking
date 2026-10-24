@@ -18,7 +18,7 @@ Any number in `src/params.js` can also be set from the URL, for example `?render
 
 Roughly, with the `high` preset and the camera above the water:
 
-| Part | Share |
+| Part | GPU time |
 |---|---|
 | Opaque scene (rocks, terrain) and its shadow map | about 2.5–3 ms |
 | Water surface (two background copies, back and front faces) | about 1.3 ms |
@@ -39,7 +39,7 @@ Roughly, with the `high` preset and the camera above the water:
   node tools/capture.mjs --bench 240 [--views above,half,under,snell] [--query "quality=medium"] [--json out/bench.json]
   ```
 
-  It renders each fixed view for 240 frames with continuous `requestAnimationFrame` submission and prints the GPU time of every pass, the GPU frame span (first pass start to last pass end) and the wall time per frame. On a laptop, differences below about 0.3 ms are within noise.
+  It renders each benchmark view (above, half, under and snell by default) for 240 frames with continuous `requestAnimationFrame` submission and prints the GPU time of every pass, the GPU frame span (first pass start to last pass end) and the wall time per frame. On a laptop, differences below about 0.3 ms are within noise.
 - `src/perf/gpuProfiler.js` wraps `beginRenderPass` / `beginComputePass` and adds timestamp writes, so three.js's own passes are measured too. Give your own passes a `label` and they show up as `<phase>.<label>`.
 
 ## Things that keep it fast
