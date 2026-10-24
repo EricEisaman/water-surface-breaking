@@ -3,7 +3,7 @@
 import * as THREE from "three/webgpu";
 import {
   Fn, float, vec2, vec3, vec4, uniform, texture, normalize, exp, max, min, clamp, mix, dot, sqrt, pow, abs,
-  smoothstep, saturate, length, select, step, fract, PI, mx_noise_float,
+  smoothstep, saturate, length, select, step, fract, floor, mod, ivec2, PI, mx_noise_float,
 } from "three/tsl";
 import { CASCADES } from "./ocean.js";
 import { CAUSTIC_WINDOW } from "./caustics.js";
@@ -69,11 +69,21 @@ export function makeOceanNodes(ocean, params) {
     return g0.y.mul(a.mul(g0.x).add(b.mul(g1.x))).add(g1.y.mul(c.mul(g0.x).add(d.mul(g1.x))));
   };
 
+  // bilinear in f32 from 4 texel loads (must match bilinearExact() in post.js): hardware filtering keeps only ~8 bits
+  // of the sub-texel position, ~4 mm on the 250 m cascade, which shows up as steps along the waterline
+  const bilinearExact = (tex, uv) => {
+    const n = float(256);
+    const st = uv.mul(n).sub(0.5);
+    const i = floor(st), f = st.sub(i);
+    const at = (dx, dy) => texture(tex).load(ivec2(mod(i.add(vec2(dx, dy)), n)));
+    return mix(mix(at(0, 0), at(1, 0), f.x), mix(at(0, 1), at(1, 1), f.x), f.y);
+  };
+
   // displacement at param point xz (vertex stage: level 0). fade[c] lets the mesh drop cascades it cannot resolve.
   // The ripple cascade uses the B-spline (smooth waterline on the tiny near plane).
   const displacement = (xz, fade = [1, 1, 1]) => {
-    const s0 = texture(disp[0], xz.div(L[0])).level(0);
-    const s1 = texture(disp[1], xz.div(L[1])).level(0);
+    const s0 = bilinearExact(disp[0], xz.div(L[0]));
+    const s1 = bilinearExact(disp[1], xz.div(L[1]));
     const s2 = bspline(disp[2], xz.div(L[2]));
     return s0.mul(fade[0]).add(s1.mul(fade[1])).add(s2.mul(fade[2]));   // (Dx, Dy, Dz, Dxz)
   };

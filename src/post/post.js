@@ -80,8 +80,22 @@ fn bsplineDisp(uv : vec2f) -> vec3f {
   let d = textureSampleLevel(disp2, sampWrap, vec2f(uv.x + h1.x, uv.y + h1.y), 0.0).xyz;
   return g0.y * (g0.x * a + g1.x * b) + g1.y * (g0.x * c + g1.x * d);
 }
+// bilinear in f32 from 4 texel loads: hardware filtering keeps only ~8 bits of the sub-texel position, which on the
+// 250 m cascade (1 m texels) is ~4 mm and shows up as small steps along the waterline. Must match bilinearExact() in
+// oceanNodes.js.
+fn bilinearExact(t : texture_2d<f32>, uv : vec2f) -> vec3f {
+  let n = vec2i(textureDimensions(t));
+  let st = uv * vec2f(n) - 0.5;
+  let i = vec2i(floor(st));
+  let f = st - floor(st);
+  let a = textureLoad(t, (i % n + n) % n, 0).xyz;
+  let b = textureLoad(t, ((i + vec2i(1, 0)) % n + n) % n, 0).xyz;
+  let c = textureLoad(t, ((i + vec2i(0, 1)) % n + n) % n, 0).xyz;
+  let d = textureLoad(t, ((i + vec2i(1, 1)) % n + n) % n, 0).xyz;
+  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+}
 fn dispAt(p : vec2f) -> vec3f {
-  return textureSampleLevel(disp0, sampWrap, p / u.L.x, 0.0).xyz + textureSampleLevel(disp1, sampWrap, p / u.L.y, 0.0).xyz + bsplineDisp(p / u.L.z);
+  return bilinearExact(disp0, p / u.L.x) + bilinearExact(disp1, p / u.L.y) + bsplineDisp(p / u.L.z);
 }
 // identical to Ocean.heightAt (CPU): 6 damped fixed-point iterations, then the height
 fn heightAt(xz : vec2f) -> f32 {
