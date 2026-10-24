@@ -135,7 +135,11 @@ export function makeOceanNodes(ocean, params) {
    * mu: cos(angle between view direction and refracted sun direction).
    * Returns { inscatter, transmittance }.
    */
-  const waterSegment = (depth0, dirY, dist, mu) => {
+  const waterSegment = (depth0, dirY, dist0, mu) => {
+    // a ray going up leaves the water at the surface: without this cap the fixed-length TIR segment (200 m) integrated
+    // "water" above the surface, where exp(+kd * height) grows faster than the red extinction and blew up to a pink /
+    // orange glow (in the total-internal-reflection region and along the waterline)
+    const dist = select(dirY.greaterThan(1e-3), min(dist0, max(depth0, 0).div(dirY)), dist0);
     const kdSun = U.kd.div(max(U.sunRefr.y.negate(), 0.2));
     const T = exp(sigmaT.negate().mul(dist));
     // sun: E(t) ~ exp(-kdSun * (depth0 - t*dirY)), integrand sigmaS * p * E * exp(-sigmaT t)

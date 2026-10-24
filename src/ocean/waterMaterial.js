@@ -171,7 +171,9 @@ export function makeWaterMaterial(O, env, params, backdrop, nearS) {
       const trans = air.mul(1.333 * 1.333).mul(float(1).sub(Fr));
       // TIR / reflection: the water body's own light seen along the reflected ray (infinite segment)
       const Rd = reflect(V.negate(), N);
-      const deep = O.waterSegment(max(U.seaLevel.sub(P.y), 0), Rd.y, float(200), dot(Rd.negate(), U.sunRefr)).inscatter;
+      // a reflection off the underside goes back down into the water; near the waterline and on steep facets the
+      // reflected ray can point up, which would leave the water at once (black) or, uncapped, blow up (pink glow)
+      const deep = O.waterSegment(max(U.seaLevel.sub(P.y), 0), min(Rd.y, -0.1), float(200), dot(Rd.negate(), U.sunRefr)).inscatter;
       const foamCol = U.ambient.mul(0.6).add(U.sunColor.mul(0.08));
       out.assign(mix(trans.add(deep.mul(Fr)), foamCol, foamAmt.mul(0.8)));
     });
