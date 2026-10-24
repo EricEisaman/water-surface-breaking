@@ -1,0 +1,8 @@
+node_modules/
+dist/
+out/
+assets_src/
+.venv/
+.DS_Store
+Thumbs.db
+*.part

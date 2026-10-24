@@ -1,0 +1,36 @@
+{
+  "name": "minamo",
+  "version": "0.1.0",
+  "description": "Realistic above, below and half-in water rendering in the browser (three.js WebGPU + WGSL)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "fetch": "node tools/python.mjs tools/fetch_assets.py",
+    "assets": "node tools/build_assets.mjs",
+    "capture": "node tools/capture.mjs"
+  },
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "^4.5.1",
+    "@gltf-transform/extensions": "^4.5.1",
+    "@gltf-transform/functions": "^4.5.1",
+    "meshoptimizer": "^1.3.0",
+    "sharp": "^0.35.5",
+    "vite": "^8.3.4"
+  },
+  "private": true,
+  "author": "東京AI映像合同会社",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kanaworksai-hue/minamo.git"
+  },
+  "homepage": "https://github.com/kanaworksai-hue/minamo",
+  "engines": {
+    "node": ">=22.12"
+  }
+}

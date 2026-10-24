@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Minamo 水面</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+    #c { display: block; width: 100vw; height: 100vh; touch-action: none; cursor: grab; }
+    #status { white-space: pre; position: fixed; left: 12px; bottom: 10px; color: #cfe6ee; font: 12px/1.4 ui-monospace, Consolas, monospace; text-shadow: 0 1px 2px #000; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <div id="status">loading…</div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
