@@ -382,6 +382,8 @@ fn main(@builtin(global_invocation_id) id : vec3u) {
   let gl = max(length(g), 1e-6);
   let sd = s0 / gl;                       // >0 above the waterline, in screen-height units
   let band = u.lens.x;
+  let asp = u.size.x / u.size.y;
+  let nA = normalize(vec2f(g.x / asp, g.y) + vec2f(0.0, -1e-6));   // towards the air side, screen-height units
   // lens water height and its gradient (neighbours use the linearised waterline distance)
   let e = px.y * 1.5;
   let H0 = lensHeight(uv, sd, band);
@@ -395,24 +397,48 @@ fn main(@builtin(global_invocation_id) id : vec3u) {
   if (h0 > 1e-5 || abs(sd) < band * 3.0) {
     // refraction through the water on the lens (drops act as small lenses: strong, inverted, blurred)
     let dropness = saturate(H0.y * 300.0);
-    let k = mix(u.lens2.w, u.lens2.x, dropness);
-    let off = grad * k * vec2f(u.size.y / u.size.x, 1.0);
+    // the meniscus next to the line refracts with meniscusRefract, the film further up with filmRefract
+    let kFilm = mix(u.lens.y, u.lens2.w, saturate(sd / (band * 3.0)));
+    let k = mix(kFilm, u.lens2.x, dropness);
+    var off = grad * k * vec2f(u.size.y / u.size.x, 1.0);
+    // the meniscus is water on the outside of the glass above the waterline, so the rays through it come from the
+    // air side: an air-side pixel must not sample the under-water image (that drew a blue band above the line)
+    if (sd > 0.0) {
+      var oH = vec2f(off.x * asp, off.y);
+      let toWater = -dot(oH, nA);
+      let lim = sd * 0.8;
+      if (toWater > lim) { oH += nA * (toWater - lim); }
+      off = vec2f(oH.x / asp, oH.y);
+    }
     let lod = min(H0.y * u.lens2.y * 250.0 + film * 0.8 + saturate(1.0 - sd / (band * 2.0)) * 1.2, 4.0);
-    let r = textureSampleLevel(colorA, sampClamp, uv + off * 1.03, lod).r;
+    // dispersion, dark rims and glints only on drops and beads: on the meniscus they drew a second line
+    let ca = 0.03 * dropness;
+    let r = textureSampleLevel(colorA, sampClamp, uv + off * (1.0 + ca), lod).r;
     let gg = textureSampleLevel(colorA, sampClamp, uv + off, lod).g;
-    let b = textureSampleLevel(colorA, sampClamp, uv + off * 0.97, lod).b;
+    let b = textureSampleLevel(colorA, sampClamp, uv + off * (1.0 - ca), lod).b;
     col = vec3f(r, gg, b) * (1.0 + film * 0.05);
     // rims go dark (grazing refraction / total internal reflection), with a highlight on the upper edge
-    let rim = smoothstep(0.25, 1.4, steep);
+    let rim = smoothstep(0.25, 1.4, steep) * dropness;
     col *= 1.0 - u.lens2.z * rim;
     let n = normalize(vec3f(-grad * 0.8, 1.0));
     let l = normalize(vec3f(-0.25, -0.75, 0.6));
-    let spec = pow(max(dot(n, l), 0.0), 60.0) * saturate(steep * 3.0);
+    let spec = pow(max(dot(n, l), 0.0), 60.0) * saturate(steep * 3.0) * dropness;
     col += spec * u.lens.w * (u.sunColor * 0.02 + vec3f(0.6));
   }
-  // dark line where the water surface meets the lens (meniscus seen edge-on), slightly on the water side
-  let lineD = (sd + band * 0.15) / (band * 0.22);
-  col *= 1.0 - u.lens.z * exp(-lineD * lineD);
+  // anti-alias the per-pixel medium cut and hide the 1-2 px sliver the water mesh leaves where it meets the near
+  // plane (up to a few px wide): the pixels next to the line are rebuilt from clean samples 4 px away on either side
+  let sdPx = sd * u.size.y;
+  if (abs(sdPx) < 3.0) {
+    let o = nA * 4.0 / u.size.y;
+    let air = textureSampleLevel(colorA, sampClamp, uv + vec2f(o.x / asp, o.y), 0.0).rgb;
+    let water = textureSampleLevel(colorA, sampClamp, uv - vec2f(o.x / asp, o.y), 0.0).rgb;
+    col = mix(water, air, smoothstep(-1.0, 1.0, sdPx));
+  }
+  // one thin dark line where the water surface meets the lens (meniscus seen edge-on), ~0.12 % of the screen height,
+  // slightly blue. Real over-under shots show a single waterline; a second parallel line reads as a thick slab.
+  let wPx = max(1.0, 0.0012 * u.size.y);
+  let c = (sdPx + 0.4) / wPx;
+  col *= vec3f(1.0) - u.lens.z * 0.75 * exp(-c * c) * vec3f(1.0, 0.9, 0.75);
   textureStore(outB, id.xy, vec4f(col, 1.0));
 }`;
 

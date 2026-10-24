@@ -64,7 +64,7 @@ The sun term of the underwater scattering is multiplied by the average of the ca
 
 ## Lens
 
-- **Waterline:** the sign of the near-plane test gives the exact line, a gradient of the half-resolution field gives the screen-space distance to it, and the meniscus band is shaded from that distance.
+- **Waterline:** the sign of the near-plane test gives the exact line, a gradient of the half-resolution field gives the screen-space distance to it, and everything at the line is shaded from that distance: about 1 px of anti-aliasing across the cut, one thin dark line (about 0.12 % of the screen height), and a narrow meniscus above it that only bends the above-water image. The meniscus never samples the under-water side and has no highlight of its own; real over-under shots show a single waterline, and a second parallel line reads as a thick slab.
 - **Draining water film:** a half-resolution semi-Lagrangian simulation of the film running down the lens after the camera leaves the water.
 - **Beads:** small procedural droplets left on a wet lens.
 - **Drops** (`src/post/lensDrops.js`): CPU-simulated larger drops that slide, leave trails, merge and evaporate, and vanish when the lens goes under water again.

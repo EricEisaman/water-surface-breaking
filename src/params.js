@@ -12,7 +12,7 @@ export const params = {
   // caustics / shafts
   causticDepth: 3.2, causticRipples: 0.3, causticStrength: 1.0, causticBlur: 0.55, godrays: 0.9, godraySteps: 40,
   // lens
-  bandWidth: 0.022, meniscusRefract: 0.6, waterlineDark: 0.55, highlight: 1.0,
+  bandWidth: 0.008, meniscusRefract: 0.07, waterlineDark: 0.55, highlight: 1.0,
   dropRefract: 1.4, dropBlur: 1.0, rimDark: 0.55, filmRefract: 0.35,
   drainSpeed: 0.9, filmTau: 0.9, wetTau: 5.0, beadDensity: 0.06,
   drops: 0.14, dropSize: 1.35, maxDrops: 60, slideSpeed: 1.0, evaporate: 9.0,
