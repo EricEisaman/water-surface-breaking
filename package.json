@@ -1,5 +1,5 @@
 {
-  "name": "minamo",
+  "name": "water-surface-breaking",
   "version": "0.1.0",
   "description": "Realistic above, below and half-in water rendering in the browser (three.js WebGPU + WGSL)",
   "scripts": {
@@ -27,9 +27,9 @@
   "author": "東京AI映像合同会社",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kanaworksai-hue/minamo.git"
+    "url": "git+https://github.com/ericeisaman/water-surface-breaking.git"
   },
-  "homepage": "https://github.com/kanaworksai-hue/minamo",
+  "homepage": "https://github.com/ericeisaman/water-surface-breaking",
   "engines": {
     "node": ">=22.12"
   }

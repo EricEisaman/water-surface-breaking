@@ -158,7 +158,7 @@ async function main() {
 
   // ---------------------------------------------------------------- GUI
   if (!CAPTURE && !query.has("nogui")) {
-    const gui = new GUI({ title: "Minamo 水面" });
+    const gui = new GUI({ title: "water-surface-breaking 水面" });
     gui.close();
     const rebuild = () => ocean.rebuildSpectrum();
     const g1 = gui.addFolder("Ocean");

@@ -1,16 +1,16 @@
 <div align="center">
 
-<img src="docs/assets/banner-zh.jpg" alt="Minamo：水上、水下与水线之间，在浏览器里实时渲染的写实海水" width="820">
+<img src="docs/assets/banner-zh.jpg" alt="water-surface-breaking：水上、水下与水线之间，在浏览器里实时渲染的写实海水" width="820">
 
 <p>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-1a9fbf?style=flat-square"></a>
   <img alt="WebGPU" src="https://img.shields.io/badge/WebGPU-WGSL-005a9c?style=flat-square">
   <a href="https://threejs.org"><img alt="three.js r186" src="https://img.shields.io/badge/three.js-r186-111?style=flat-square&logo=threedotjs"></a>
   <img alt="Chrome desktop" src="https://img.shields.io/badge/Chrome-desktop-4285f4?style=flat-square&logo=googlechrome&logoColor=white">
-  <a href="https://github.com/kanaworksai-hue/minamo/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/kanaworksai-hue/minamo?style=flat-square&logo=github&label=stars&color=f5c518"></a>
+  <a href="https://github.com/ericeisaman/water-surface-breaking/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/ericeisaman/water-surface-breaking?style=flat-square&logo=github&label=stars&color=f5c518"></a>
 </p>
 
-<p><a href="https://github.com/kanaworksai-hue"><img src="docs/brand/kanaworks-mark.png" height="22" alt="" align="absmiddle"></a>&nbsp;<a href="https://github.com/kanaworksai-hue"><b>A KanaWorks_AI project</b></a></p>
+<p><a href="https://github.com/ericeisaman"><img src="docs/brand/kanaworks-mark.png" height="22" alt="" align="absmiddle"></a>&nbsp;<a href="https://github.com/ericeisaman"><b>A KanaWorks_AI project</b></a></p>
 
 [English](README.md) | **简体中文** | [日本語](README.ja.md)
 
@@ -18,7 +18,7 @@
 
 </div>
 
-**Minamo（水面）** 是一个在浏览器里运行的实时水面渲染器。目标是让**水上、水下，以及相机半入水时的水线**都达到照片般的效果：FFT 海面、水中光的吸收和散射、焦散、光柱、斯涅尔窗、严格贴合每一道波浪的水线，以及相机出水后顺着镜头流下的水膜和水滴。
+**water-surface-breaking（水面）** 是一个在浏览器里运行的实时水面渲染器。目标是让**水上、水下，以及相机半入水时的水线**都达到照片般的效果：FFT 海面、水中光的吸收和散射、焦散、光柱、斯涅尔窗、严格贴合每一道波浪的水线，以及相机出水后顺着镜头流下的水膜和水滴。
 
 它基于 [three.js](https://threejs.org)（`WebGPURenderer`），再加上跑在同一个 WebGPU 设备上的手写 WGSL 计算 / 渲染 pass。不需要游戏引擎，也不需要插件：`npm ci && npm run dev`，打开 Chrome 就能看。
 
@@ -54,8 +54,8 @@
 - `git`
 
 ```bash
-git clone https://github.com/kanaworksai-hue/minamo.git
-cd minamo
+git clone https://github.com/ericeisaman/water-surface-breaking.git
+cd water-surface-breaking
 npm ci
 npm run dev
 ```
@@ -157,7 +157,7 @@ npm run assets    # LOD、meshopt 压缩、WebP、压缩 EXR 天空
 <details>
 <summary><b>提示「WebGPU not available」</b></summary>
 
-请使用较新的桌面版 Chrome 或 Edge。Linux 上可能还需要打开 `chrome://flags/#enable-unsafe-webgpu`。新版 Safari 和 Firefox 也支持 WebGPU，但 Minamo 只在 Chrome 上测试过。
+请使用较新的桌面版 Chrome 或 Edge。Linux 上可能还需要打开 `chrome://flags/#enable-unsafe-webgpu`。新版 Safari 和 Firefox 也支持 WebGPU，但 water-surface-breaking 只在 Chrome 上测试过。
 </details>
 
 <details>
@@ -190,9 +190,9 @@ npm run assets    # LOD、meshopt 压缩、WebP、压缩 EXR 天空
 
 ## ⭐ 喜欢就点个 Star
 
-如果 Minamo 让你多看了两眼，请在[仓库页面](https://github.com/kanaworksai-hue/minamo)右上角点一下 **⭐ Star**。这能让更多人发现它，也是我继续更新的动力。
+如果 water-surface-breaking 让你多看了两眼，请在[仓库页面](https://github.com/ericeisaman/water-surface-breaking)右上角点一下 **⭐ Star**。这能让更多人发现它，也是我继续更新的动力。
 
-有 bug 或想法可以[提 Issue](https://github.com/kanaworksai-hue/minamo/issues)；在 X 上分享截图时欢迎带上 [@KanaWorks_AI](https://x.com/KanaWorks_AI)。
+有 bug 或想法可以[提 Issue](https://github.com/ericeisaman/water-surface-breaking/issues)；在 X 上分享截图时欢迎带上 [@KanaWorks_AI](https://x.com/KanaWorks_AI)。
 
 ## 📄 许可与致谢
 
@@ -210,6 +210,6 @@ npm run assets    # LOD、meshopt 压缩、WebP、压缩 EXR 天空
 
 <p><b>Made with ♥ by <a href="https://x.com/KanaWorks_AI">KanaWorks_AI</a></b></p>
 
-<p><sub>喜欢 Minamo 的话，点个 ⭐ 能让更多人看到它。更多项目：<a href="https://github.com/kanaworksai-hue">github.com/kanaworksai-hue</a></sub></p>
+<p><sub>喜欢 water-surface-breaking 的话，点个 ⭐ 能让更多人看到它。更多项目：<a href="https://github.com/ericeisaman">github.com/ericeisaman</a></sub></p>
 
 </div>

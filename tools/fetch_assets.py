@@ -14,7 +14,7 @@ import urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "assets_src")
 FORCE = "--force" in sys.argv
-UA = {"User-Agent": "Mozilla/5.0 (Minamo asset fetch)"}   # Poly Haven returns 403 without a UA
+UA = {"User-Agent": "Mozilla/5.0 (water-surface-breaking asset fetch)"}   # Poly Haven returns 403 without a UA
 
 HDRIS = [("kloofendal_48d_partly_cloudy_puresky", "4k")]
 TEXTURES = [("coast_sand_01", "2k"), ("coast_sand_rocks_02", "2k")]

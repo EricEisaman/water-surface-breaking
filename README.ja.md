@@ -1,16 +1,16 @@
 <div align="center">
 
-<img src="docs/assets/banner-ja.jpg" alt="Minamo：水上も、水中も、その境目も。ブラウザでリアルタイムに描く写実的な海" width="820">
+<img src="docs/assets/banner-ja.jpg" alt="water-surface-breaking：水上も、水中も、その境目も。ブラウザでリアルタイムに描く写実的な海" width="820">
 
 <p>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-1a9fbf?style=flat-square"></a>
   <img alt="WebGPU" src="https://img.shields.io/badge/WebGPU-WGSL-005a9c?style=flat-square">
   <a href="https://threejs.org"><img alt="three.js r186" src="https://img.shields.io/badge/three.js-r186-111?style=flat-square&logo=threedotjs"></a>
   <img alt="Chrome desktop" src="https://img.shields.io/badge/Chrome-desktop-4285f4?style=flat-square&logo=googlechrome&logoColor=white">
-  <a href="https://github.com/kanaworksai-hue/minamo/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/kanaworksai-hue/minamo?style=flat-square&logo=github&label=stars&color=f5c518"></a>
+  <a href="https://github.com/ericeisaman/water-surface-breaking/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/ericeisaman/water-surface-breaking?style=flat-square&logo=github&label=stars&color=f5c518"></a>
 </p>
 
-<p><a href="https://github.com/kanaworksai-hue"><img src="docs/brand/kanaworks-mark.png" height="22" alt="" align="absmiddle"></a>&nbsp;<a href="https://github.com/kanaworksai-hue"><b>A KanaWorks_AI project</b></a></p>
+<p><a href="https://github.com/ericeisaman"><img src="docs/brand/kanaworks-mark.png" height="22" alt="" align="absmiddle"></a>&nbsp;<a href="https://github.com/ericeisaman"><b>A KanaWorks_AI project</b></a></p>
 
 [English](README.md) | [简体中文](README.zh-CN.md) | **日本語**
 
@@ -18,7 +18,7 @@
 
 </div>
 
-**Minamo（水面）** は、ブラウザで動くリアルタイムの水のレンダラーです。**水の上、水の中、そしてカメラが半分沈んだときの水面の境目**を、写真のような見た目で描くことを目指しています。FFT による海面、水中での光の吸収と散乱、コースティクス、光の筋（ゴッドレイ）、スネルの窓、波に正確に沿う水面の境目、水から出たあとレンズを流れ落ちる水膜と水滴まで入っています。
+**water-surface-breaking（水面）** は、ブラウザで動くリアルタイムの水のレンダラーです。**水の上、水の中、そしてカメラが半分沈んだときの水面の境目**を、写真のような見た目で描くことを目指しています。FFT による海面、水中での光の吸収と散乱、コースティクス、光の筋（ゴッドレイ）、スネルの窓、波に正確に沿う水面の境目、水から出たあとレンズを流れ落ちる水膜と水滴まで入っています。
 
 [three.js](https://threejs.org)（`WebGPURenderer`）と、同じ WebGPU デバイス上で動く自前の WGSL コンピュート / レンダーパスで作っています。ゲームエンジンもプラグインも不要です。`npm ci && npm run dev` を実行して Chrome で開くだけです。
 
@@ -54,8 +54,8 @@
 - `git`
 
 ```bash
-git clone https://github.com/kanaworksai-hue/minamo.git
-cd minamo
+git clone https://github.com/ericeisaman/water-surface-breaking.git
+cd water-surface-breaking
 npm ci
 npm run dev
 ```
@@ -157,7 +157,7 @@ npm run assets    # LOD、meshopt 圧縮、WebP、圧縮 EXR の空
 <details>
 <summary><b>「WebGPU が使えません」と出る</b></summary>
 
-最近のデスクトップ版 Chrome か Edge を使ってください。Linux ではまだ `chrome://flags/#enable-unsafe-webgpu` が必要な場合があります。Safari や Firefox も最近のバージョンは WebGPU に対応していますが、Minamo は Chrome でしか確認していません。
+最近のデスクトップ版 Chrome か Edge を使ってください。Linux ではまだ `chrome://flags/#enable-unsafe-webgpu` が必要な場合があります。Safari や Firefox も最近のバージョンは WebGPU に対応していますが、water-surface-breaking は Chrome でしか確認していません。
 </details>
 
 <details>
@@ -190,9 +190,9 @@ Issue やプルリクエストを歓迎します。
 
 ## ⭐ 気に入ったら Star を
 
-Minamo を見て「おっ」と思ったら、[リポジトリページ](https://github.com/kanaworksai-hue/minamo)右上の **⭐ Star** を押してもらえるとうれしいです。ほかの人が見つけやすくなり、次のアップデートの励みになります。
+water-surface-breaking を見て「おっ」と思ったら、[リポジトリページ](https://github.com/ericeisaman/water-surface-breaking)右上の **⭐ Star** を押してもらえるとうれしいです。ほかの人が見つけやすくなり、次のアップデートの励みになります。
 
-バグやアイデアは [Issue](https://github.com/kanaworksai-hue/minamo/issues) へどうぞ。スクリーンショットを X でシェアするときは [@KanaWorks_AI](https://x.com/KanaWorks_AI) をメンションしてもらえるとうれしいです。
+バグやアイデアは [Issue](https://github.com/ericeisaman/water-surface-breaking/issues) へどうぞ。スクリーンショットを X でシェアするときは [@KanaWorks_AI](https://x.com/KanaWorks_AI) をメンションしてもらえるとうれしいです。
 
 ## 📄 ライセンスとクレジット
 
@@ -210,6 +210,6 @@ Minamo を見て「おっ」と思ったら、[リポジトリページ](https:/
 
 <p><b>Made with ♥ by <a href="https://x.com/KanaWorks_AI">KanaWorks_AI</a></b></p>
 
-<p><sub>Minamo を気に入ったら ⭐ をお願いします。ほかのプロジェクト：<a href="https://github.com/kanaworksai-hue">github.com/kanaworksai-hue</a></sub></p>
+<p><sub>water-surface-breaking を気に入ったら ⭐ をお願いします。ほかのプロジェクト：<a href="https://github.com/ericeisaman">github.com/ericeisaman</a></sub></p>
 
 </div>

@@ -1,6 +1,6 @@
-# How Minamo works
+# How water-surface-breaking works
 
-Minamo renders a sunny tropical bay above, below and exactly at the water surface. three.js (`WebGPURenderer`, TSL node materials) draws the scene, the PBR rocks and the water surface. The ocean simulation, caustics, the underwater medium, the lens and the whole post-processing chain are hand-written WGSL compute and render passes on the **same `GPUDevice`**; the two sides exchange textures through three.js `ExternalTexture`.
+water-surface-breaking renders a sunny tropical bay above, below and exactly at the water surface. three.js (`WebGPURenderer`, TSL node materials) draws the scene, the PBR rocks and the water surface. The ocean simulation, caustics, the underwater medium, the lens and the whole post-processing chain are hand-written WGSL compute and render passes on the **same `GPUDevice`**; the two sides exchange textures through three.js `ExternalTexture`.
 
 ## One frame
 
@@ -93,4 +93,4 @@ The scene target is half float, so materials clamp their output (an unclamped su
 - Pope & Fry, *Absorption spectrum (380–700 nm) of pure water*, Applied Optics 1997.
 - Evan Wallace, [WebGL Water](https://madebyevan.com/webgl-water/) and *Rendering Realtime Caustics in WebGL*.
 - [gasgiant/FFT-Ocean](https://github.com/gasgiant/FFT-Ocean), [Crest](https://github.com/wave-harmonic/crest) (ideas only).
-- The visual target was William Faucher's EasyWaterscape for Unreal Engine. Minamo uses none of its code or assets.
+- The visual target was William Faucher's EasyWaterscape for Unreal Engine. water-surface-breaking uses none of its code or assets.

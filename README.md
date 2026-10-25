@@ -1,16 +1,16 @@
 <div align="center">
 
-<img src="docs/assets/banner-en.jpg" alt="Minamo: realistic above, below and half-in water rendered live in your browser" width="820">
+<img src="docs/assets/banner-en.jpg" alt="water-surface-breaking: realistic above, below and half-in water rendered live in your browser" width="820">
 
 <p>
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-1a9fbf?style=flat-square"></a>
   <img alt="WebGPU" src="https://img.shields.io/badge/WebGPU-WGSL-005a9c?style=flat-square">
   <a href="https://threejs.org"><img alt="three.js r186" src="https://img.shields.io/badge/three.js-r186-111?style=flat-square&logo=threedotjs"></a>
   <img alt="Chrome desktop" src="https://img.shields.io/badge/Chrome-desktop-4285f4?style=flat-square&logo=googlechrome&logoColor=white">
-  <a href="https://github.com/kanaworksai-hue/minamo/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/kanaworksai-hue/minamo?style=flat-square&logo=github&label=stars&color=f5c518"></a>
+  <a href="https://github.com/ericeisaman/water-surface-breaking/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/ericeisaman/water-surface-breaking?style=flat-square&logo=github&label=stars&color=f5c518"></a>
 </p>
 
-<p><a href="https://github.com/kanaworksai-hue"><img src="docs/brand/kanaworks-mark.png" height="22" alt="" align="absmiddle"></a>&nbsp;<a href="https://github.com/kanaworksai-hue"><b>A KanaWorks_AI project</b></a></p>
+<p><a href="https://github.com/ericeisaman"><img src="docs/brand/kanaworks-mark.png" height="22" alt="" align="absmiddle"></a>&nbsp;<a href="https://github.com/ericeisaman"><b>A KanaWorks_AI project</b></a></p>
 
 **English** | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
 
@@ -18,7 +18,7 @@
 
 </div>
 
-**Minamo** (水面, "the water's surface") is a real-time water renderer for the browser. It aims for a photographic look **above the water, under it, and right at the waterline** when a camera is half submerged: an FFT ocean, light absorption and scattering in the water, caustics, light shafts, Snell's window, a waterline that follows every wave exactly, and water running down the lens after the camera comes up.
+**water-surface-breaking** (水面, "the water's surface") is a real-time water renderer for the browser. It aims for a photographic look **above the water, under it, and right at the waterline** when a camera is half submerged: an FFT ocean, light absorption and scattering in the water, caustics, light shafts, Snell's window, a waterline that follows every wave exactly, and water running down the lens after the camera comes up.
 
 It is built on [three.js](https://threejs.org) (`WebGPURenderer`) plus hand-written WGSL compute and render passes that share the same WebGPU device. No game engine, no plugins: `npm ci && npm run dev` and open Chrome.
 
@@ -49,13 +49,13 @@ It is built on [three.js](https://threejs.org) (`WebGPURenderer`) plus hand-writ
 
 **Requirements:**
 
-- A desktop browser with WebGPU: a recent **Chrome** or Edge. Minamo targets desktop GPUs; phones and integrated graphics will be slow
+- A desktop browser with WebGPU: a recent **Chrome** or Edge. water-surface-breaking targets desktop GPUs; phones and integrated graphics will be slow
 - [Node.js](https://nodejs.org) 22.12 or later
 - `git`
 
 ```bash
-git clone https://github.com/kanaworksai-hue/minamo.git
-cd minamo
+git clone https://github.com/ericeisaman/water-surface-breaking.git
+cd water-surface-breaking
 npm ci
 npm run dev
 ```
@@ -157,7 +157,7 @@ Converting the sky needs `pip install OpenEXR numpy`. Set `PYTHON=...` if your P
 <details>
 <summary><b>"WebGPU not available"</b></summary>
 
-Use a recent desktop Chrome or Edge. On Linux, WebGPU may still need `chrome://flags/#enable-unsafe-webgpu`. Safari and Firefox support WebGPU in recent versions too, but Minamo is only tested in Chrome.
+Use a recent desktop Chrome or Edge. On Linux, WebGPU may still need `chrome://flags/#enable-unsafe-webgpu`. Safari and Firefox support WebGPU in recent versions too, but water-surface-breaking is only tested in Chrome.
 </details>
 
 <details>
@@ -190,9 +190,9 @@ Issues and pull requests are welcome.
 
 ## ⭐ Like it? Star it
 
-If Minamo made you look twice at a browser tab, please click **⭐ Star** at the top of the [repository page](https://github.com/kanaworksai-hue/minamo). It helps other people find it and keeps me working on the next update.
+If water-surface-breaking made you look twice at a browser tab, please click **⭐ Star** at the top of the [repository page](https://github.com/ericeisaman/water-surface-breaking). It helps other people find it and keeps me working on the next update.
 
-You can also [open an issue](https://github.com/kanaworksai-hue/minamo/issues) with a bug or an idea, or share a screenshot on X and tag [@KanaWorks_AI](https://x.com/KanaWorks_AI).
+You can also [open an issue](https://github.com/ericeisaman/water-surface-breaking/issues) with a bug or an idea, or share a screenshot on X and tag [@KanaWorks_AI](https://x.com/KanaWorks_AI).
 
 ## 📄 License and credits
 
@@ -200,7 +200,7 @@ You can also [open an issue](https://github.com/kanaworksai-hue/minamo/issues) w
 - **Assets:** CC0 from [Poly Haven](https://polyhaven.com); see [LICENSES.md](LICENSES.md).
 - **Brand:** the KanaWorks_AI name, logo and the Kana character are © 東京AI映像合同会社 (Tokyo AI Visuals LLC) and are **not** covered by the MIT license. See [docs/brand](docs/brand/README.md).
 - **Built on:** [three.js](https://threejs.org) and [Vite](https://vite.dev). Techniques and papers are credited in [docs/HOW_IT_WORKS.md](docs/HOW_IT_WORKS.md#references).
-- **Inspiration:** the look of William Faucher's EasyWaterscape for Unreal Engine. Minamo uses none of its code or assets.
+- **Inspiration:** the look of William Faucher's EasyWaterscape for Unreal Engine. water-surface-breaking uses none of its code or assets.
 
 <br>
 
@@ -210,6 +210,6 @@ You can also [open an issue](https://github.com/kanaworksai-hue/minamo/issues) w
 
 <p><b>Made with ♥ by <a href="https://x.com/KanaWorks_AI">KanaWorks_AI</a></b></p>
 
-<p><sub>If Minamo made you smile, a ⭐ helps others find it. More projects: <a href="https://github.com/kanaworksai-hue">github.com/kanaworksai-hue</a></sub></p>
+<p><sub>If water-surface-breaking made you smile, a ⭐ helps others find it. More projects: <a href="https://github.com/ericeisaman">github.com/ericeisaman</a></sub></p>
 
 </div>

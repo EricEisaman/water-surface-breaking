@@ -1,6 +1,6 @@
 # Performance and profiling
 
-Minamo targets desktop GPUs. On a laptop RTX 4070 at 1920×1080 output, a frame takes roughly **7 ms of GPU time with the default `high` preset**, about 5 ms with `medium` and about 4 ms with `low`. Your numbers will differ with the GPU, the driver and the browser; treat these as orders of magnitude, not as a benchmark.
+water-surface-breaking targets desktop GPUs. On a laptop RTX 4070 at 1920×1080 output, a frame takes roughly **7 ms of GPU time with the default `high` preset**, about 5 ms with `medium` and about 4 ms with `low`. Your numbers will differ with the GPU, the driver and the browser; treat these as orders of magnitude, not as a benchmark.
 
 ## Quality presets
 
@@ -44,7 +44,7 @@ Roughly, with the `high` preset and the camera above the water:
 
 ## Things that keep it fast
 
-- **No three.js viewport nodes in materials.** Every `viewportSharedTexture()` / `viewportDepthTexture()` node makes three.js end the render pass, copy the whole target and start a new pass. The water material instead reads one background copy made by Minamo itself.
+- **No three.js viewport nodes in materials.** Every `viewportSharedTexture()` / `viewportDepthTexture()` node makes three.js end the render pass, copy the whole target and start a new pass. The water material instead reads one background copy made by water-surface-breaking itself.
 - **Rock LODs with a fixed screen-space error** and coarse, separate shadow casters (the scanned rocks are hundreds of thousands of triangles each at full detail).
 - **The waterline test runs once per pixel per frame** and every later pass reads its result.
 - **Light shafts at half resolution** with a depth- and medium-aware upsample.
